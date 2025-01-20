@@ -49,21 +49,22 @@ int Anomaly_Detection_Nb = 2;
 static
 float values_for_anomaly_detection[2];
 
-// static
-// int debug=1;
+static
+int debug=1;
 
 static
 void get_values_for_anomaly_detection(float value){
-  // if (debug) {
-  //   debug=0;
-  //   return;
+  if (debug) {
+    debug=0;
+    return;
 
-  // };
+  };
   if(Counter < Anomaly_Detection_Nb){
     values_for_anomaly_detection[Counter] = value;
     Counter++;
   }
   if(Counter == Anomaly_Detection_Nb){
+    Counter = 0;
     char command[1000];
     char output[1000];
     sprintf(command, "python3 -W ignore /home/cell/flexric/build/examples/xApp/c/monitor/anomaly_detector/model.py %f %f", values_for_anomaly_detection[0], values_for_anomaly_detection[1]);
@@ -461,7 +462,7 @@ int main(int argc, char* argv[])
   // END KPM
   ////////////
 
-  sleep(3);
+  sleep(30);
 
   for (int i = 0; i < nodes.len; ++i) {
     // Remove the handle previously returned
